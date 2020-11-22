@@ -29,7 +29,7 @@ app.get('/id/:id', (req, res) => {
     })
 })
 
-app.get('/empresas', (req, res) => {
+app.get('/imoveis', (req, res) => {
     pool.query("SELECT * FROM imoveis", (error, results) => {
         if (error) {
             throw error
