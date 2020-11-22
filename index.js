@@ -15,17 +15,8 @@ const port = 3000
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.get('/latlon/:lat/:lon', (req, res) => {
+app.get('/anuncio/:lat/:lon', (req, res) => {
     pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null ORDER BY dist asc limit 50", (error, results) => {
-        if (error) {
-            throw error
-        }
-        res.status(200).json(results.rows)
-    })
-})
-
-app.get('/id/:id', (req, res) => {
-    pool.query("SELECT * FROM anuncios WHERE id_anuncios =" + req.params.id, (error, results) => {
         if (error) {
             throw error
         }
