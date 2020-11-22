@@ -12,7 +12,7 @@ const app = express()
 const port = 3000
 
 app.get('/latlon/:lat/:lon', (req, res) => {
-    pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null ORDER BY dist asc limit 200", (error, results) => {
+    pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null and dist < 5 ORDER BY dist asc", (error, results) => {
         if (error) {
             throw error
         }
