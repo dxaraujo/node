@@ -43,7 +43,7 @@ app.get('/imoveis', (req, res) => {
 })
 
 app.post('/imoveis', (req, res) => {
-    let query = "INSERT INTO IMOVEIS (nome, divida, city, state, street, latitude, longitude, businesstype, declared_price, price, totalareas, bedrooms, bathrooms, parkingspaces, rate, createdat, final_date, price_m2) VALUES ("
+    let query = "INSERT INTO IMOVEIS (nome, divida, city, state, street, latitude, longitude, businesstype, declared_price, price, usableareas, bedrooms, bathrooms, parkingspaces, rate, createdat, final_date, price_m2) VALUES ("
     query += req.body.nome
     query += ", "
     query += req.body.divida
@@ -64,7 +64,7 @@ app.post('/imoveis', (req, res) => {
     query += ", "
     query += req.body.price
     query += ", "
-    query += req.body.totalareas
+    query += req.body.usableareas
     query += ", "
     query += req.body.bedrooms
     query += ", "
