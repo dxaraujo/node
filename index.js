@@ -85,7 +85,7 @@ app.post('/imoveis', (req, res) => {
         if (error) {
             throw error
         }
-        res.status(200).json(results.rows)
+        res.status(200).json(results)
     })
 })
 
@@ -97,7 +97,7 @@ app.put('/imoveis', (req, res) => {
         if (error) {
             throw error
         }
-        res.status(200).json(results.rows)
+        res.status(200).json(results)
     })
 })
 
