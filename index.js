@@ -74,12 +74,13 @@ app.post('/imoveis', (req, res) => {
     query += ", "
     query += req.body.rate
     query += ", "
-    query += req.body.createdat
+    query += '\'' + req.body.createdat + '\''
     query += ", "
-    query += req.body.final_date
+    query += '\'' + req.body.final_date + '\''
     query += ", "
     query += req.body.price_m2
     query += ")"
+    console.log(query)
     pool.query(query, (error, results) => {
         
         if (error) {
