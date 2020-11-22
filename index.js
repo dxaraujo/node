@@ -93,7 +93,7 @@ app.put('/imoveis', (req, res) => {
     const id = req.body.id_imoveis;
     const price = req.body.price;
     const price_m2 = req.body.price_m2;
-    pool.query("UPDADE IMOVEIS SET id_imoveis = " + id + ", price = " + price + ", price_m2 = " + price_m2, (error, results) => {
+    pool.query("UPDATE IMOVEIS SET id_imoveis = " + id + ", price = " + price + ", price_m2 = " + price_m2, (error, results) => {
         if (error) {
             throw error
         }
