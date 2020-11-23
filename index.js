@@ -9,6 +9,52 @@ const pool = new Pool({
     port: 5432,
 })
 
+// READ
+// const fs = require("fs");
+// const fastcsv = require("fast-csv");
+
+// let stream = fs.createReadStream("ceps.txt");
+// let csvStream = fastcsv.parse({ delimiter: '\t' })
+//     .on("data", function (data) {
+//         let zipecode = data[0]
+//         let city = data[1].split('/')[0]
+//         let stateacronym = data[1].split('/')[1]
+//         let neighborhood = data[2]
+//         let street = data[3].split(', ')[0].split('-')[0]
+//         let streetnumber = 0
+//         if (data[3].split(', ').length > 1) {
+//             streetnumber = data[3].split(', ')[1].split(' ')[0]
+//         }
+//         let complement = data[4] || ''
+
+//         let query = 'INSERT INTO CEPS(zipcode, city, stateacronym, neighborhood, street, streetnumber, complement) VALUES('
+//         query += zipecode
+//         query += ', '
+//         query += '\'' + city + '\''
+//         query += ', '
+//         query += '\'' + stateacronym + '\''
+//         query += ', '
+//         query += '\'' + neighborhood + '\''
+//         query += ', '
+//         query += '\'' + street + '\''
+//         query += ', '
+//         query += streetnumber
+//         query += ', '
+//         query += '\'' + complement + '\''
+//         query += ')'
+//         pool.query(query, (error, results) => {
+//             if (error) {
+//                 console.log(error)
+//                 // throw error
+//             }
+//         })
+//     })
+//     .on("end", function () {
+//         stream.close()
+//     });
+
+// stream.pipe(csvStream);
+
 const app = express()
 const port = 3000
 
@@ -17,6 +63,15 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.get('/anuncio/:lat/:lon', (req, res) => {
     pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null ORDER BY dist asc limit 50", (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+})
+
+app.get('/anuncio2/:lat/:lon/:size', (req, res) => {
+    pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null ORDER BY dist asc limit " + req.params.lon, (error, results) => {
         if (error) {
             throw error
         }
@@ -75,7 +130,7 @@ app.post('/imoveis', (req, res) => {
     query += ")"
     console.log(query)
     pool.query(query, (error, results) => {
-        
+
         if (error) {
             throw error
         }
