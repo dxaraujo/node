@@ -80,7 +80,7 @@ app.get('/anuncio2/:lat/:lon/:size', (req, res) => {
 })
 
 app.get('/imoveis', (req, res) => {
-    pool.query("SELECT * FROM imoveis", (error, results) => {
+    pool.query("SELECT * FROM imoveis order by id_imoveis desc", (error, results) => {
         if (error) {
             throw error
         }
