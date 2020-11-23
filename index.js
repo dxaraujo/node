@@ -71,7 +71,7 @@ app.get('/anuncio/:lat/:lon', (req, res) => {
 })
 
 app.get('/anuncio2/:lat/:lon/:size', (req, res) => {
-    pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null ORDER BY dist asc limit " + req.params.lon, (error, results) => {
+    pool.query("SELECT an.*, ST_Distance(ST_GeographyFromText('POINT(" + req.params.lat + " " + req.params.lon + ")'), an.location)/1000 as dist FROM anuncios an WHERE an.location is not null ORDER BY dist asc limit " + req.params.size, (error, results) => {
         if (error) {
             throw error
         }
